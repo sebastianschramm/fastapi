@@ -1,3 +1,4 @@
+from dataclasses import asdict, is_dataclass
 from enum import Enum
 from types import GeneratorType
 from typing import Any, List, Set
@@ -37,6 +38,8 @@ def jsonable_encoder(
         return obj.value
     if isinstance(obj, (str, int, float, type(None))):
         return obj
+    if is_dataclass(obj):
+        return asdict(obj)
     if isinstance(obj, dict):
         encoded_dict = {}
         for key, value in obj.items():
